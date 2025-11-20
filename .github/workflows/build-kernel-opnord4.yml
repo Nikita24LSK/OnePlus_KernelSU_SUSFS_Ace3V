@@ -181,10 +181,17 @@ jobs:
           ./kernel_platform/oplus/build/oplus_build_kernel.sh pineapple gki
        #   ./kernel_platform/oplus/build/oplus_build_kernel.sh pineapple gki full all none
           
+      - name: Copy Image
+        run: |
+          echo "Changing to configuration directory: $CONFIG..."
+          cd "$CONFIG"
+          
+          echo "Copying Image"
+          cp ./out/dist/Image ../
           
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: kernel-${{ env.CONFIG }}
           path: |
-            $CONFIG/out/dist/Image
+            Image
