@@ -156,17 +156,17 @@ jobs:
       - name: Run sed and perl Commands
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel_platform"
+        #  cd "$CONFIG/kernel_platform"
           
-          echo "Running sed commands..."
+        #  echo "Running sed commands..."
           
           # Run sed commands for modifications
-          sed -i 's/check_defconfig//' ./common/build.config.gki
-          sed -i "s/dirty/'Wild+'/g" ./common/scripts/setlocalversion
-          sed -i 's/^#\(choose_lto_type \$3\|choose_target_build \$4\|choose_repack_img \$5\)/\1/' ./oplus/build/oplus_setup.sh
-          sed -i "/stable_scmversion_cmd/s/-maybe-dirty/-Wild+/g" ./build/kernel/kleaf/impl/stamp.bzl
-          sed -i 's/-dirty//' ./common/scripts/setlocalversion
-          sed -i 's|^source kernel_platform/oplus/build/oplus_setup.sh \$1 \$2|source kernel_platform/oplus/build/oplus_setup.sh \$1 \$2 \$3 \$4 \$5|' ./oplus/build/oplus_build_kernel.sh
+        #  sed -i 's/check_defconfig//' ./common/build.config.gki
+        #  sed -i "s/dirty/'Wild+'/g" ./common/scripts/setlocalversion
+        #  sed -i 's/^#\(choose_lto_type \$3\|choose_target_build \$4\|choose_repack_img \$5\)/\1/' ./oplus/build/oplus_setup.sh
+        #  sed -i "/stable_scmversion_cmd/s/-maybe-dirty/-Wild+/g" ./build/kernel/kleaf/impl/stamp.bzl
+        #  sed -i 's/-dirty//' ./common/scripts/setlocalversion
+        #  sed -i 's|^source kernel_platform/oplus/build/oplus_setup.sh \$1 \$2|source kernel_platform/oplus/build/oplus_setup.sh \$1 \$2 \$3 \$4 \$5|' ./oplus/build/oplus_build_kernel.sh
 
           # Run perl command to modify UTS_VERSION
         #  perl -pi -e 's{UTS_VERSION="\$\(echo \$UTS_VERSION \$CONFIG_FLAGS \$TIMESTAMP \| cut -b -\$UTS_LEN\)"}{UTS_VERSION="#1 SMP PREEMPT Sat Apr 20 04:20:00 UTC 2024"}' ./common/scripts/mkcompile_h
@@ -178,7 +178,9 @@ jobs:
           
           echo "Building the kernel..."
           rm -rf ./kernel_platform/common/android/abi_gki_protected_exports_*
-          ./kernel_platform/oplus/build/oplus_build_kernel.sh pineapple gki full all none
+          ./kernel_platform/oplus/build/oplus_build_kernel.sh pineapple gki
+       #   ./kernel_platform/oplus/build/oplus_build_kernel.sh pineapple gki full all none
+          
           
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
